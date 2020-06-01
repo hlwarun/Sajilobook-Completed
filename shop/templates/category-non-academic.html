@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active"><b>Category : Non-Academic</b> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+{% if messages %}
+  {% for m in messages %}
+    <div style="text-align:center;" class="alert alert-{{m.tags}}">
+      {{m}}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<div class="shop-area pt-95 pb-100">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-12">
+                <div class="shop-top-bar mb-35">
+                    <div class="select-shoing-wrap">
+                        <div class="shop-select">
+                            <select>
+                                <option value="" disabled selected hidden>Sort by
+                                </option>
+                                <option value="">Newest</option>
+                                <option value="">In stock</option>
+                            </select>
+                        </div>
+                        <p>Showing 1–9 of total result</p>
+                    </div>
+                    <div class="filter-active">
+                        <a href="#"><i class="fa fa-plus"></i> filter</a>
+                    </div>
+                </div>
+                <div class="product-filter-wrapper">
+                    <div class="row">
+                        <!-- Product Filter -->
+                        <div class="col-md-4 col-sm-6 col-xs-12 mb-30">
+                            <div class="product-filter">
+                                <h5>Filter by BooK's Name</h5>
+
+                                <form class="example" action="/search/">
+                                    <input type="text" placeholder="Search.." name="search" role="search">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+
+                            </div>
+                        </div>
+                        <!-- Product Filter -->
+                        <div class="col-md-4 col-sm-6 col-xs-12 mb-30">
+                            <div class="product-filter">
+                                <h5>Product Filter</h5>
+                                <ul class="color-filter">
+                                    <li><input type="checkbox" value="Novel">Novel</li>
+                                    <li><input type="checkbox" value="Stories">Stories</li>
+                                    <li><input type="checkbox" value="Poetry">Poetry</li>
+                                    <li><input type="checkbox" value="Essay">Essay</li>
+                                    <li><input type="checkbox" value="Biography">Biography</li>
+                                    <li><input type="checkbox" value="AutoBiography">Auto Biography </li>
+                                    <li><input type="checkbox" value="Article">Article</li>
+                                    <li><input type="checkbox" value="Travelogue">Travelogue</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Product Filter -->
+                        <div class="col-md-4 col-sm-6 col-xs-12 mb-30">
+                            <div class="product-filter">
+                                <h5>Product Filter</h5>
+                                <ul class="color-filter">
+                                    <li><input type="checkbox" value="New"> New</li>
+                                    <li><input type="checkbox" value="Old"> Old</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shop-bottom-area">
+                    <div class="row">
+                        {% for p in products %}
+                            <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                                <div class="product-wrap mb-25 scroll-zoom">
+                                    <div class="product-img">
+                                        <a href="#">
+                                            <img class="default-img" src="/media/{{p.image}}" height="500" width="600" alt="">
+                                        </a>
+                                        <span class="pink">-{{p.discount_percent}}%</span>
+                                        <div class="product-action">
+                                            <div class="pro-same-action pro-wishlist">
+                                                <a title="Wishlist" href="#"><i class="pe-7s-like"></i></a>
+                                            </div>
+                                            <div class="pro-same-action pro-cart">
+                                                <a title="Add To Cart" href="{% url "update_cart" p.product_code %}"><i class="pe-7s-cart"></i> Add to cart</a>
+                                            </div>
+                                            <div class="pro-same-action pro-quickview">
+                                                <a title="Quick View" href="{% url 'single' p.product_code %}"><i class="fa fa-eye"></i></a>
+                                                <!-- <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="pe-7s-look"></i></a> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-content text-center">
+                                        <h3><a href="{% url 'single' p.product_code %}">{{p.title}}</a></h3>
+                                        <!-- <div class="product-rating">
+                                            <i class="fa fa-star-o yellow"></i>
+                                            <i class="fa fa-star-o yellow"></i>
+                                            <i class="fa fa-star-o yellow"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div> -->
+                                        <div class="product-price">
+                                            <span>Rs. {{p.new_price}}</span>
+                                            <span class="old">Rs. {{p.original_price}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                    <div class="pro-pagination-style text-center mt-30">
+                        <ul>
+                            {% if products.has_previous %}
+                              <li><a class="prev" href="?page={{products.previous_page_number}}"><i class="fa fa-angle-double-left"></i></a></li>
+                            {% endif %}
+
+                            {% for num in products.paginator.page_range %}
+                              {% if products.number == num %}
+                                <li><a class="active" href="#">{{num}}</a></li>
+                              {% endif %}
+                            {% endfor %}
+
+                            {% if products.has_next %}
+                              <li><a class="next" href="?page={{products.next_page_number}}"><i class="fa fa-angle-double-right"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

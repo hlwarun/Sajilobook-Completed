@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active"><b>Sell</b> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+{% if messages %}
+  {% for m in messages %}
+    <div style="text-align:center;" class="alert alert-{{m.tags}}">
+      {{m}}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<div class="login-register-area pt-100 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a>
+                            <h4> Sell Your Books</h4>
+                        </a>
+                    </div>
+                    <style>
+                        select {
+                            color: gray;
+                        }
+
+                        option {
+                            color: rgba(0, 0, 0, 0.849);
+                        }
+                    </style>
+                    <div class="tab-content">
+                        <div id="lg2" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form method="post" enctype="multipart/form-data">
+                                      {% csrf_token %}
+                                        <input type="text" name="user-name" placeholder="Your full Name" required>
+                                        <input type="text" name="user-book" placeholder="Book name" required>
+                                        <select required id="user-bookcat" name="user-bookcat">
+                                            <option value="" disabled selected hidden>Select a category</option>
+                                            <option value="Academic">Academic</option>
+                                            <option value="Non Academic">Non Academic</option>
+                                        </select>
+                                        <select id="user-academiccat" name="user-academiccat">
+                                            <option value="" disabled selected hidden>Select if academic</option>
+                                            <option value="School">School</option>
+                                            <option value="High School">High School</option>
+                                            <option value="A Level">A level</option>
+                                            <option value="Bachelor">Bachelor</option>
+                                            <option value="Master">Master</option>
+                                        </select>
+                                        <select id="user-nonacademiccat" name="user-nonacademiccat">
+                                            <option value="" disabled selected hidden>Select if non academic
+                                            </option>
+                                            <option value="Novel">Novel</option>
+                                            <option value="Stories">Stories</option>
+                                            <option value="Poetry">Poetry</option>
+                                            <option value="Essay">Essay</option>
+                                            <option value="Biography">Biography</option>
+                                            <option value="AutoBiography">AutoBiography</option>
+                                            <option value="Article">Article</option>
+                                            <option value="Travelogue">Travelogue</option>
+                                        </select>
+                                        <input type="number" name="price" placeholder="Price of book" required>
+                                        <input name="user-email" placeholder="Email" type="email" required>
+                                        <input type="tel" name="user-no" placeholder="Your mobile no" required>
+                                        <input type="text" name="user-district" placeholder="District" required>
+                                        <input type="text" name="user-college" placeholder="School/College if books are related">
+                                        <input type="file" name="book-image">
+                                        <!-- <map name="book-image">
+                                          <div id="drag-drop-area">
+                                              <p>Upload Image of book/note here</p>
+                                          </div>
+                                          <script src="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.js"></script>
+                                          <script>
+                                              var uppy = Uppy.Core()
+                                                  .use(Uppy.Dashboard, {
+                                                      inline: true,
+                                                      target: '#drag-drop-area'
+                                                  })
+                                                  .use(Uppy.Tus, {
+                                                      endpoint: '/media/products'
+                                                  }) //put the url here where the image shoud be uploaded
+                                              uppy.on('complete', (result) => {
+                                                  console.log('Upload complete! We’ve uploaded these files:', result.successful)
+                                              })
+                                          </script>
+                                        </map> -->
+
+                                        <br>
+                                        <div class="button-box">
+                                            <button type="submit"><span>Sell</span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active"><b>Cart</b> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="cart-main-area pt-90 pb-100">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+          {% if empty %}
+            <h2 style='text-align:center; color:#5b5858;'>{{message}}</h2>
+            <br>
+            <h5 style='text-align:center;'><a style='text-decoration:underline;' href="{% url 'non_academic' %}">KEEP SHOPPING</a></h5>
+          {% else %}
+            <form method="post" action="#">
+              {% csrf_token %}
+                <div class="wrap cf">
+                    <div class="cart">
+                        <ul class="cartWrap">
+                            {% for c in carts.cartitem_set.all %}
+                              <li class="items odd">
+                                  <div class="infoWrap">
+                                      <div class="cartSection">
+                                          <img src="/media/{{c.product.image}}" alt="" class="itemImg" />
+
+                                          <h3>{{c.product}}</h3>
+                                      </div>
+                                      <div class="cart-plus-minus">
+                                          <input class="cart-plus-minus-box" type="text" name="qty" value="{{c.quantity}}">
+                                      </div>
+                                      <div class="prodTotal cartSection">
+                                          <p>Rs.{{c.product.new_price}}</p>
+                                      </div>
+                                      <div class="cartSection removeWrap">
+                                          <a href="{% url 'update_cart' c.product.product_code %}?qty=0" class="remove">x</a>
+                                      </div>
+                                  </div>
+                              </li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                    <div class="subtotal cf">
+                        <ul>
+                            <li class="totalRow"><span class="label">Subtotal</span><span class="value">Rs.{{carts.sub_total}}</span></li>
+
+                            <li class="totalRow"><span class="label">Shipping</span><span class="value">Rs.{{carts.shipping}}</span></li>
+
+                            <li class="totalRow"><span class="label">Tax</span><span class="value">Rs.{{carts.tax}}</span>
+                            </li>
+                            <li class="totalRow final"><span class="label">Total</span><span class="value">Rs.{{carts.total}}</span></li>
+                            <li class="totalRow"><a href="{% url 'checkout' %}" class="btn continue">Checkout</a></li>
+                        </ul>
+                    </div>
+            </form>
+          {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

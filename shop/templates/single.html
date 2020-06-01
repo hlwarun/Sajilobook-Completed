@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active"><b>Product View</b> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+
+<!-- Modal -->
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12 col-xs-12">
+                        <div class="tab-content quickview-big-img">
+                            <div id="pro-1" class="tab-pane fade show active">
+                                <img src="/media/{{product.image}}" height="326" width="370" alt="">
+                            </div>
+                            <!-- <div id="pro-2" class="tab-pane fade">
+                                <img src="{% static 'img/product/book-cover.jpg' %}" alt="">
+                            </div> -->
+                        </div>
+                        <!-- Thumbnail Large Image End -->
+                        <!-- Thumbnail Image End -->
+                        <div class="quickview-wrap mt-15">
+                            <div class="quickview-slide-active owl-carousel nav nav-style-1" role="tablist">
+                                <a class="active" data-toggle="tab" href="#pro-1"><img src="/media/{{product.image}}" height="99" width="99" alt=""></a>
+                                <a data-toggle="tab" href="#"><img src="{% static 'img/product/book-2.jpg' %}" height="99" width="99" alt=""></a>
+                                <a data-toggle="tab" href="#"><img src="{% static 'img/product/fox.jpg' %}" height="99" width="99" alt=""></a>
+                                <a data-toggle="tab" href="#"><img src="{% static 'img/product/book-cover.jpg' %}" height="99" width="99" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-12 col-xs-12">
+                        <div class="product-details-content quickview-content">
+                            <h2>{{product.title}}</h2>
+                            <div class="product-details-price">
+                                <span>Rs.{{product.new_price}} </span>
+                                <span class="old">Rs.{{product.original_price}} </span>
+                            </div>
+                            <!-- <div class="pro-details-rating-wrap">
+                                <div class="pro-details-rating">
+                                    <i class="fa fa-star-o yellow"></i>
+                                    <i class="fa fa-star-o yellow"></i>
+                                    <i class="fa fa-star-o yellow"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <span>3 Reviews</span>
+                            </div> -->
+                            <p>{{product.description}}</p>
+                            <div class="pro-details-list" id="vendor">
+                                <ul>
+                                    <li>- Vendor's Name: {{product.vendor}}</li>
+                                    <li>- Contact: {{product.contact}}</li>
+                                    <li>- Location: {{product.location}} </li>
+                                </ul>
+                                <br>
+                                <p>Contact the suppllier on the above details to get your products or press buy here to purchase from us.</p>
+                            </div>
+                            <form action="{% url 'update_cart' product.product_code %}" method="GET">
+                              <div class="pro-details-quality">
+                                  <div class="cart-plus-minus">
+                                      <input class="cart-plus-minus-box" type="text" name="qty" value="1">
+                                  </div>
+                                  <div class="pro-details-cart btn-hover">
+                                      <input type="submit" value="Buy Here">
+                                  </div>
+
+                                  <!-- <div class="pro-details-wishlist">
+                                      <a href="#"><i class="fa fa-heart-o"></i></a>
+                                  </div> -->
+                                  <!-- <div class="pro-details-compare">
+                                      <a href="#"><i class="pe-7s-shuffle"></i></a>
+                                  </div> -->
+                              </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

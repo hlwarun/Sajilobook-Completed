@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{%block content%}
+
+<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active"><b>Checkout</b> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+{% if messages %}
+  {% for m in messages %}
+    <div style="text-align:center;" class="alert alert-{{m.tags}}">
+      {{m}}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<div class="wrapper">
+    <form method="POST">
+      {% csrf_token %}
+        <div id="wizard">
+            <!-- SECTION 1 -->
+            <h4></h4>
+            <section>
+                <div class="form-row form-group">
+                    <div class="form-holder">
+                        <label for="firstname">
+						First Name *
+					</label>
+                        {{form.first_name}}
+                    </div>
+                    <div class="form-holder">
+                        <label for="lastname">
+						Last Name *
+					</label>
+                        {{form.last_name}}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="companyname">
+					Company Name
+				</label>
+                    {{form.company_name}}
+                </div>
+                <div class="form-row">
+                    <label for="country">
+					Country *
+				</label>
+                    <div class="form-holder">
+                        {{form.country}}
+                        <!-- <i class="zmdi zmdi-caret-down"></i> -->
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="address">
+					Address *
+				</label>
+                    {{form.district}}
+
+                </div>
+                <div class="form-row">
+                    <label for="city">
+					Town / City *
+				</label>
+                    {{form.city}}
+                    {{form.street}}
+                </div>
+            </section>
+
+            <!-- SECTION 2 -->
+            <h4></h4>
+            <section>
+                <div class="form-row">
+                    <label for="zip">
+					Postcode / Zip *
+				</label>
+                    {{form.zip_code}}
+                </div>
+                <div class="form-row form-group">
+                    <div class="form-holder">
+                        <label for="phone">
+						Phone *
+					</label>
+                        {{form.phone}}
+                    </div>
+                    <div class="form-holder">
+                        <label for="email">
+						Email Address *
+					</label>
+                        {{form.email}}
+                    </div>
+                </div>
+                <div class="form-row" style="margin-bottom: 18px">
+                    <label for="notes">
+					Order Notes
+				</label>
+                    <!-- <textarea class="form-control" name="notes" placeholder="Note about your order, eg. special notes fordelivery." style="height: 149px"></textarea> -->
+                    {{form.order_notes}}
+                </div>
+                <div class="checkbox">
+                    <label>
+					<input type="checkbox"> Create an account?
+					<span class="checkmark"></span>
+				</label>
+                </div>
+            </section>
+            <!-- SECTION 3 -->
+            <h4></h4>
+            <section>
+                <div class="product">
+                    <div class="item">
+                        <div class="left">
+                            <a href="#" class="thumb">
+                                <img src="{% static 'img/product/b.jpg' %}" alt="">
+                            </a>
+                            <div class="purchase">
+                                <h6>
+                                    <a href="#">Geeta</a>
+                                </h6>
+                                <span>x2</span>
+                            </div>
+                        </div>
+                        <span class="price">Rs.300</span>
+                    </div>
+                </div>
+                <div class="checkout">
+                    <div class="subtotal">
+                        <span class="heading">Subtotal</span>
+                        <span>Rs.600</span>
+                    </div>
+                    <p class="shipping">
+                        <span class="heading">Shipping</span> there are no shipping methods available. please double check your address, or contact us if you need any help.
+                    </p>
+                    <div class="total">
+                        <span class="heading">Subtotal</span>
+                        <span class="total-price">Rs.738</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <h4></h4>
+            <section>
+              {% for value, name in form.fields.payment_method.choices %}
+                <div class="checkbox-circle">
+                  {% if value == "Direct bank transfer" %}
+                    <label class="active">
+            					<input type="radio" name="billing method" value="{{name}}" checked>{{name}}
+            					<span class="checkmark"></span>
+            					<div class="tooltipabc">
+            						Make your payment directly into our bank account. Please use your Order ID as the
+            						payment reference. Your order will not be shipped until the funds have cleared in our
+            						account.
+            					</div>
+				          </label>
+
+                  {% elif value == "Cheque payments" %}
+                    <label>
+					<input type="radio" name="billing method" value="Check payments">Cheque payments
+					<span class="checkmark"></span>
+					<div class="tooltipabc">
+						Please send a cheque to Store Name, Store Street, Store Town, Store State / County, Store
+						Postcode.
+					</div>
+				</label>
+
+        {% elif value == "Cash on delivery" %}
+                    <label>
+					<input type="radio" name="billing method" value="Cash on delivery">Cash on delivery
+					<span class="checkmark"></span>
+					<div class="tooltipabc">
+						Pay with cash upon delivery.
+					</div>
+				</label>
+        {% endif %}
+                </div>
+                {% endfor %}
+                <div class="actions clearfix">
+                    <ul role="menu" aria-label="Pagination" class="step-last">
+                        <li aria-disabled="false"><a href="#previous" role="menuitem">Previous</a></li>
+                        <li aria-hidden="true" aria-disabled="true" class="disabled" style="display: none;"><a href="#next" role="menuitem">Next</a></li>
+                        <li aria-hidden="false"><a href="#finish" role="menuitem" style="width: 167px;">Place Order</a></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </form>
+</div>
+{%endblock%}
