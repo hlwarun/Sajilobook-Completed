@@ -7,9 +7,7 @@ This website is fully responsive and is designed using plain Html, CSS, Javascri
 ![](shop/static/sajilobook1.png)
 
 This website has an additional admin panel so that the admin/owner of the industry can control the verious functionalities. 
-
 The users need to create an account and login with that account in order to checkout with their orders in the cart. 
-
 The registered password for the username is stored in the hash form and thus is not readable by the admin.
 
 ![](shop/static/register.png)
